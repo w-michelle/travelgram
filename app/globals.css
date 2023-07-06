@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Oleo+Script&family=Roboto:wght@300;400;500;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Oleo+Script&display=swap");
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -16,12 +16,14 @@
   }
 }
 .logo-title {
-  font-family: "Oleo Script", sans-serif;
+  font-family: "Lobster";
 }
 main {
   font-family: "Roboto", sans-serif;
 }
-
+.customfont {
+  font-family: "Roboto";
+}
 .send {
   rotate: 20deg;
 }

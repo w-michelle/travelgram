@@ -15,17 +15,19 @@ import { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/utils/firebase";
 import Upload from "./Upload";
-import { Oleo_Script } from "next/font/google";
+import { Lobster } from "next/font/google";
 import Image from "next/image";
-const oleo_script = Oleo_Script({
+
+const lobster = Lobster({
   subsets: ["latin"],
   weight: "400",
-  variable: "--font-oleo-script",
+  variable: "--font-lobster",
 });
 function Nav() {
   const [user, loading] = useAuthState(auth);
   const [toggleUpload, setToggleUpload] = useState(false);
   const router = useRouter();
+
   let DEFAULT_PROFILE_IMAGE =
     "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
 
@@ -45,32 +47,49 @@ function Nav() {
           <div className="md:hidden fixed bottom-0 w-full bg-white">
             <ul className="flex justify-between items-center w-full px-10 py-3 text-2xl">
               <Link href="/">
-                <AiOutlineHome className="text-blue" />
+                <AiOutlineHome
+                  className="icon"
+                  aria-label="home"
+                  title="home"
+                />
               </Link>
-
-              {/* <Link href="#">
-                <BiSearch className="icon" />
-              </Link> */}
 
               <Link href="#">
                 <RiAddBoxLine
                   className="icon"
                   onClick={() => setToggleUpload(true)}
+                  aria-label="Create a Post"
+                  title="Create a Post"
                 />
               </Link>
 
-              {/* <Link href="#">
-                <RiVideoLine className="icon" />
-              </Link> */}
-
-              <Link href="/profile">
-                {user && (
-                  <Image
-                    src={user ? user.photoURL : ""}
-                    alt="Profile Picture"
-                    className="w-8 rounded-full "
-                  />
-                )}
+              <Link
+                href={{
+                  pathname: `/profile/${user.uid}`,
+                  query: { uid: user.uid },
+                }}
+              >
+                <div className="w-7 h-7 relative ">
+                  {user && user.photoURL ? (
+                    <Image
+                      src={user?.photoURL}
+                      alt="Profile Picture"
+                      className="w-8 rounded-full "
+                      fill
+                      aria-label="Profile Picture"
+                      title="Profile"
+                    />
+                  ) : (
+                    <Image
+                      src={DEFAULT_PROFILE_IMAGE}
+                      alt="Profile Picture"
+                      className="w-8 rounded-full "
+                      fill
+                      aria-label="Profile Picture"
+                      title="Profile"
+                    />
+                  )}
+                </div>
               </Link>
             </ul>
           </div>
@@ -78,7 +97,9 @@ function Nav() {
             <ul className="nav-list-v flex flex-col gap-8 mt-6">
               <Link href="/">
                 <h1
-                  className={`lg:block lg:text-2xl hidden ${oleo_script.className} text-xl`}
+                  className={`lg:block lg:text-2xl hidden ${lobster.className} text-xl`}
+                  title="Logo"
+                  aria-label="Logo"
                 >
                   Travelgram
                 </h1>
@@ -86,62 +107,56 @@ function Nav() {
 
               <Link href="/">
                 <div className="nav-list-v-item">
-                  <AiOutlineHome className="icon" />
+                  <AiOutlineHome
+                    className="icon"
+                    aria-label="Home"
+                    title="Home"
+                  />
                   <span className="lg:block hidden">Home</span>
                 </div>
               </Link>
 
-              {/* <Link href="#">
-                <div className="nav-list-v-item">
-                  <BiSearch className="icon" />
-                  <span className="lg:block hidden">Search</span>
-                </div>
-              </Link>
-              <Link href="#">
-                <div className="nav-list-v-item">
-                  <MdOutlineExplore className="icon" />
-                  <span className="lg:block hidden">Explore</span>
-                </div>
-              </Link>
-
-              <Link href="#">
-                <div className="nav-list-v-item">
-                  <RiVideoLine className="icon" />
-                  <span className="lg:block hidden">Reels</span>
-                </div>
-              </Link>
-              <Link href="#">
-                <div className="nav-list-v-item">
-                  <FiSend className="icon send" />
-                  <span className="lg:block hidden">Messages</span>
-                </div>
-              </Link>
-              <Link href="#">
-                <div className="nav-list-v-item">
-                  <AiOutlineHeart className="icon" />
-                  <span className="lg:block hidden">Notifications</span>
-                </div>
-              </Link> */}
               <Link href="#">
                 <div
                   className="nav-list-v-item"
                   onClick={() => setToggleUpload(true)}
                 >
-                  <RiAddBoxLine className="icon" />
+                  <RiAddBoxLine
+                    className="icon"
+                    aria-label="Create a Post"
+                    title="Create a Post"
+                  />
                   <span className="lg:block hidden">Create</span>
                 </div>
               </Link>
-              <Link href="/profile">
-                <div className="nav-list-v-item">
-                  {user && (
-                    <Image
-                      src={
-                        user.photoURL ? user.photoURL : DEFAULT_PROFILE_IMAGE
-                      }
-                      alt="Profile Picture"
-                      className="w-6 rounded-full icon"
-                    />
-                  )}
+              <Link
+                href={{
+                  pathname: `/profile/${user.uid}`,
+                  query: { uid: user.uid },
+                }}
+              >
+                <div className="nav-list-v-item gap-2">
+                  <div className="w-7 h-7 relative">
+                    {user && user.photoURL ? (
+                      <Image
+                        src={user?.photoURL}
+                        alt="Profile Picture"
+                        className="w-8 rounded-full "
+                        fill
+                        aria-label="Profile Picture"
+                        title="Profile"
+                      />
+                    ) : (
+                      <Image
+                        src={DEFAULT_PROFILE_IMAGE}
+                        alt="Profile Picture"
+                        className="w-8 rounded-full "
+                        fill
+                        aria-label="Profile Picture"
+                        title="Profile"
+                      />
+                    )}
+                  </div>
 
                   <span className="lg:block hidden">Profile</span>
                 </div>
@@ -150,7 +165,11 @@ function Nav() {
                 className="nav-list-v-item absolute bottom-6 hover:cursor-pointer"
                 onClick={handleLogOut}
               >
-                <BiLogOut className="icon menu-icon" />
+                <BiLogOut
+                  className="icon menu-icon"
+                  aria-label="Log Out"
+                  title="Log Out"
+                />
 
                 <span className="lg:block hidden">Log Out</span>
               </div>

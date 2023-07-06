@@ -27,6 +27,8 @@ import { useState, useEffect } from "react";
 import { formatLogDate } from "@/utils/formatDate.js";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Image from "next/image";
+import Link from "next/link";
+import PostModal from "@/components/PostModal";
 
 export default function Details({ ...params }) {
   const router = useRouter();
@@ -35,6 +37,17 @@ export default function Details({ ...params }) {
   const [comment, setComment] = useState("");
   const [likedByUser, setLikeByUser] = useState([]);
   const [allLikes, setAllLikes] = useState([]);
+  const [togglePost, setTogglePost] = useState(false);
+  const [postId, setPostId] = useState("");
+
+  const handleEdit = (post) => {
+    setPostId(post);
+    setTogglePost(true);
+  };
+
+  const handleToggle = () => {
+    togglePost ? setTogglePost(false) : setTogglePost(true);
+  };
 
   const submitComment = async () => {
     if (!auth.currentUser) return router.push("/auth/login");
@@ -51,11 +64,11 @@ export default function Details({ ...params }) {
         comment,
         profilePic: auth.currentUser.photoURL,
         displayName: auth.currentUser.displayName,
+        uid: auth.currentUser.uid,
         time: Timestamp.now(),
       }),
     });
     setComment("");
-    console.log(allLikes);
   };
 
   const addLikedUser = async () => {
@@ -106,12 +119,13 @@ export default function Details({ ...params }) {
 
   useEffect(() => {
     getLikes();
-  }, []);
+  }, [user, loading]);
 
   return (
     <div className="details-container bg-glass backdrop-blur-[10px] h-screen flex justify-center items-center p-10">
+      {togglePost && <PostModal post={postId} toggle={handleToggle} />}
       <button
-        className="absolute top-12 right-[200px] text-xl hover:text-white"
+        className="absolute top-8 right-8 right-[200px] text-xl hover:text-white"
         onClick={() => router.back()}
       >
         &times;
@@ -133,16 +147,25 @@ export default function Details({ ...params }) {
                 <Image
                   src={routeData.profilePic}
                   alt="Profile Picture"
-                  className="object-cover"
+                  className="object-cover rounded-full"
                   fill
                 />
               </div>
             )}
-
-            <strong className="text-xs ml-2">
-              {routeData && <p>{routeData.displayName}</p>}
-            </strong>
-            <HiOutlineDotsVertical className="ml-auto rotate-[90deg]" />
+            <Link
+              href={{
+                pathname: `/profile/${routeData.uid}`,
+                query: { uid: routeData.uid },
+              }}
+            >
+              <p className="text-xs ml-2">
+                {routeData && <strong>{routeData.displayName}</strong>}
+              </p>
+            </Link>
+            <HiOutlineDotsVertical
+              className="ml-auto rotate-[90deg]"
+              onClick={() => handleEdit(routeData)}
+            />
           </div>
 
           {/* comment section */}
@@ -153,7 +176,7 @@ export default function Details({ ...params }) {
                   <Image
                     src={routeData.profilePic}
                     alt="Profile Picture"
-                    className="object-cover"
+                    className="object-cover rounded-full"
                     fill
                   />
                 </div>
@@ -161,10 +184,17 @@ export default function Details({ ...params }) {
 
               <div className="comment flex ml-2">
                 {routeData && (
-                  <p className="text-xs">
-                    <strong>{routeData.displayName} </strong>
-                    {routeData.caption}
-                  </p>
+                  <Link
+                    href={{
+                      pathname: `/profile/${routeData.uid}`,
+                      query: { uid: routeData.uid },
+                    }}
+                  >
+                    <p className="text-xs">
+                      <strong>{routeData.displayName} </strong>
+                      {routeData.caption}
+                    </p>
+                  </Link>
                 )}
               </div>
             </div>
@@ -177,10 +207,6 @@ export default function Details({ ...params }) {
               ) : (
                 <AiOutlineHeart className="heart-icon" onClick={addLikedUser} />
               )}
-
-              <TbMessageCircle2 className="top-right-icon bubble" />
-              <FiSend className="top-right-icon send" />
-              <BiBookmark className="ml-auto" />
             </div>
             <div className="likes-bar text-xs pb-2 border-b-2 border-bgrey">
               {allLikes ? allLikes.length : "0"} likes

@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -33,7 +34,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ["var(--font-roboto)"],
-        serif: ["var(--font-oleo-script)"],
+        oleo: ["var(--font-oleo-script)"],
       },
       boxShadow: {
         custom: "0px 8px 15px 1px #121212;",
@@ -48,6 +49,7 @@ module.exports = {
         grey: "rgb(149, 149, 149)",
         modalbg: "#c9c9c983",
         glass: "hsl(0,0%,45%,0.2)",
+        blue: "rgb(0, 149, 246)",
       },
       gridAutoRows: {
         130: "130px",

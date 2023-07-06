@@ -2,7 +2,6 @@ const formatLogDate = (date) => {
   let time = new Date(date.seconds * 1000 + date.nanoseconds / 1000000);
 
   let today = new Date();
-  console.log(`today is ${today}`);
 
   if (time.getFullYear() === today.getFullYear()) {
     return time.toLocaleDateString("en-us", { month: "long", day: "numeric" });

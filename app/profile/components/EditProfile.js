@@ -9,14 +9,13 @@ import {
 } from "firebase/storage";
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { MdKeyboardBackspace } from "react-icons/md";
 
 function EditProfile({ setEditProfile, ffData }) {
   const [user, loading] = useAuthState(auth);
   const [imageFile, setImageFile] = useState("");
   const [displayname, setDisplayName] = useState(user.displayName);
-  const [name, setName] = useState("");
-
-  console.log(user);
+  const [name, setName] = useState(ffData[0].displayName);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +29,7 @@ function EditProfile({ setEditProfile, ffData }) {
     //generate public url for the file
     const publicImageUrl = await getDownloadURL(newImageRef);
 
-    const image = imageFile.length > 0 ? publicImageUrl : ffData[0].profilePic;
+    const image = imageFile !== "" ? publicImageUrl : ffData[0].profilePic;
 
     await updateProfile(auth.currentUser, {
       displayName: displayname.replace(/ /g, ""),
@@ -43,7 +42,7 @@ function EditProfile({ setEditProfile, ffData }) {
     await updateDoc(docRef, {
       displayName: displayname.replace(/ /g, ""),
       name: name,
-      profilePic: publicImageUrl,
+      profilePic: image,
     });
   };
 
@@ -52,49 +51,49 @@ function EditProfile({ setEditProfile, ffData }) {
 
     if (/\.(jpg|jpeg|png|gif)$/i.test(file.name)) {
       setImageFile(file);
-      console.log(file);
+
       //   setIsPreviewMode(true);
     } else {
       alert("Upload Image Only");
     }
   };
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+
   return (
-    <div className="bg-white w-3/4 p-4 h-1/2 flex flex-col items-center justify-center rounded-xl">
-      <div className="upload-title text-center pb-4 border-b-2 border-bgrey w-full">
-        Edit profile
+    <div className="bg-white w-3/4 p-4 h-[400px] flex flex-col items-center justify-center rounded-xl">
+      <div className="flex justify-between pb-4 border-b-2 border-bgrey w-full">
+        <button className="ml-4" onClick={() => setEditProfile(false)}>
+          <MdKeyboardBackspace />
+        </button>
+        <div className="upload-title text-center mx-auto">Edit profile</div>
       </div>
 
       <div className="w-full h-4/5 flex flex-col items-start justify-center gap-4">
-        <div className="flex gap-1 items-center">
+        <div className="flex flex-col gap-2">
           <p>Profile Picture</p>
 
           <input
             type="file"
             id="fileInput"
-            className="fileInput"
+            className=""
             onChange={handleFileSelect}
           />
-          {imageFile && <p className="py-1 px-2 bg-bgrey">{imageFile.name}</p>}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-col gap-2">
           <p>Display Name</p>
           <input
             type="text"
             id="displayname"
-            className="displayname py-1 px-2 bg-bgrey"
+            className="py-1 px-2 rounded-md bg-bgrey"
             value={displayname}
             onChange={(e) => setDisplayName(e.target.value)}
           />
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-col gap-2">
           <p>Name</p>
           <input
             type="text"
             id="name"
-            className="name py-1 px-2 bg-bgrey"
+            className="py-1 px-2 rounded-md bg-bgrey"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />

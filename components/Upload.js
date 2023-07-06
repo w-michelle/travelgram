@@ -80,7 +80,7 @@ function Upload({ toggle }) {
   const dropped = (e) => {
     e.preventDefault();
     const files = Array.from(e.dataTransfer.files)[0];
-    console.log(files);
+
     if (/\.(jpg|jpeg|png|gif)$/i.test(files.name)) {
       setImageFile(files);
       setIsPreviewMode(true);

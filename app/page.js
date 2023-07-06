@@ -21,7 +21,7 @@ export default function Home() {
   const [user, loading] = useAuthState(auth);
   const router = useRouter();
 
-  const checkUser = async () => {
+  const createUserDoc = async () => {
     try {
       const userQuery = query(
         collection(db, "users"),
@@ -34,7 +34,6 @@ export default function Home() {
             displayName: user.displayName,
             profilePic: user.photoURL,
             uid: user.uid,
-            name: user.tenantId,
           });
         }
       });
@@ -47,9 +46,10 @@ export default function Home() {
     if (!user) {
       router.push("/auth");
     } else {
-      checkUser();
+      createUserDoc();
     }
-  }, [user, loading]);
+  }, [user]);
+
   return (
     <main>
       <Navtop />

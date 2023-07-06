@@ -27,6 +27,7 @@ function AddComment(postID) {
         comment,
         profilePic: user.photoURL,
         displayName: user.displayName,
+        uid: user.uid,
         time: Timestamp.now(),
       }),
     });

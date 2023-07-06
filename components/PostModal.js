@@ -22,10 +22,10 @@ function PostModal({ post, toggle }) {
   const [user, loading] = useAuthState(auth);
   const [userInfo, setUserInfo] = useState([]);
   const [creatorInfo, setCreatorInfo] = useState([]);
-
+  const [containId, setContainId] = useState([]);
+  const [action, setClickAction] = useState(false);
   const handleClose = () => {
     toggle();
-    console.log(post);
   };
 
   const deletePost = async () => {
@@ -54,6 +54,7 @@ function PostModal({ post, toggle }) {
         profilepic: userInfo[0].profilePic,
       }),
     });
+    setClickAction(!action);
   };
 
   const unfollow = async () => {
@@ -65,8 +66,7 @@ function PostModal({ post, toggle }) {
         profilepic: post.profilePic,
       }),
     });
-    console.log(creatorInfo);
-    console.log(userInfo);
+
     //update user onto followed user
     // I HAVE TO GET USER'S DOC ID
     const docRef2 = doc(db, "users", creatorInfo[0].id);
@@ -77,6 +77,7 @@ function PostModal({ post, toggle }) {
         profilepic: userInfo[0].profilePic,
       }),
     });
+    setClickAction(!action);
   };
 
   const getUser = async () => {
@@ -105,6 +106,9 @@ function PostModal({ post, toggle }) {
       onSnapshot(userQuery, (snapshot) => {
         let arr = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
         setCreatorInfo(arr);
+        let followingArr = arr[0]?.follower;
+        let ids = followingArr ? followingArr.map((item) => item.id) : "";
+        setContainId(ids);
       });
     } catch (error) {
       console.log(error);
@@ -114,7 +118,7 @@ function PostModal({ post, toggle }) {
   useEffect(() => {
     getUser();
     getCreator();
-  }, [user]);
+  }, [action]);
 
   //if this post id === user.uid this post is user's then remove
   return (
@@ -148,26 +152,22 @@ function PostModal({ post, toggle }) {
       ) : (
         <div className="post-modaltext-sm w-[300px] rounded-2xl  bg-white relative">
           <ul className="text-center">
-            {/* {
-                            userInfo ? (
-                                <li className="post-modal-item delete-post" onClick={follow}>follow</li>
-                            )
-                            : (
-                                <li className="post-modal-item delete-post" onClick={unfollow}>unfollow</li>
-                            )
-                        } */}
-            <li
-              className="post-modal-item border-b-2 border-bgrey p-4 hover:cursor-pointer"
-              onClick={() => follow()}
-            >
-              follow
-            </li>
-            <li
-              className="post-modal-item border-b-2 border-bgrey p-4 hover:cursor-pointer"
-              onClick={() => unfollow()}
-            >
-              unfollow
-            </li>
+            {containId.includes(user.uid) ? (
+              <li
+                className="post-modal-item border-b-2 border-bgrey p-4 hover:cursor-pointer"
+                onClick={() => unfollow()}
+              >
+                Unfollow
+              </li>
+            ) : (
+              <li
+                className="post-modal-item border-b-2 border-bgrey p-4 hover:cursor-pointer"
+                onClick={() => follow()}
+              >
+                Follow
+              </li>
+            )}
+
             <Link href={{ pathname: `/post/${post.id}`, query: { ...post } }}>
               <li className="post-modal-item border-b-2 border-bgrey p-4 hover:cursor-pointer">
                 Go to post

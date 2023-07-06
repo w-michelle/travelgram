@@ -9,8 +9,6 @@ export default function Hydrate({ children }) {
     setIsHydrated(true);
   }, []);
   return (
-    <div>
-      {isHydrated ? <body className="">{children}</body> : <body></body>}
-    </div>
+    <>{isHydrated ? <body className="">{children}</body> : <body></body>}</>
   );
 }

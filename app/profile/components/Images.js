@@ -9,13 +9,18 @@ const Images = ({ posts }) => {
   return (
     <div className="grid grid-cols-3 gap-1 ">
       {posts?.map((post) => (
-        <div className="relative grid-photo-wrapper pb-[100%]" key={user.uid}>
+        <div
+          className="relative grid-photo-wrapper pb-[100%] w-full"
+          key={post.id}
+        >
           <Link href={{ pathname: `/post/${post.id}`, query: { ...post } }}>
             <Image
               src={post.imageUrl}
               alt="Posts Image"
               fill
-              className="grid-photo w-full h-full object-cover"
+              className="grid-photo object-cover"
+              aria-label="Post Picture"
+              title="Post"
             />
           </Link>
         </div>

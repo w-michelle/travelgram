@@ -5,6 +5,12 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Login from "@/components/Login";
+import { Oleo_Script } from "next/font/google";
+const oleo_script = Oleo_Script({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-oleo-script",
+});
 
 function Auth() {
   const route = useRouter();

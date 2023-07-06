@@ -110,7 +110,7 @@ const Followers = ({ ffData }) => {
 
   useEffect(() => {
     getUserdoc();
-  }, [user]);
+  }, []);
 
   if (!ffData[0].follower) {
     return (
@@ -127,34 +127,42 @@ const Followers = ({ ffData }) => {
         >
           <div className="flex gap-1 items-center">
             <div className="w-7 h-7 relative">
-              {follower && (
-                <Image
-                  src={follower.profilepic}
-                  alt="Profile Picture"
-                  fill
-                  className="object-cover"
-                />
+              <Image
+                src={follower?.profilepic}
+                alt="Profile Picture"
+                fill
+                className="object-cover rounded-full"
+              />
+            </div>
+            <div>
+              {follower.displayName ? (
+                <p>{follower.displayName}</p>
+              ) : (
+                <p>anonymous</p>
               )}
             </div>
-            <div>{follower && <p>{follower.displayName}</p>}</div>
           </div>
-          <div>
-            {find.includes(follower.id) ? (
-              <button
-                className="border-[1px] border-black py-1 px-3"
-                onClick={() => getFollower("unfollow", follower.id)}
-              >
-                unfollow
-              </button>
-            ) : (
-              <button
-                className="border-[1px] border-black py-1 px-3"
-                onClick={() => getFollower("follow", follower.id)}
-              >
-                follow
-              </button>
-            )}
-          </div>
+          {ffData[0]?.uid === user.uid ? (
+            <div>
+              {find.includes(follower.id) ? (
+                <button
+                  className="border-[1px] border-black py-1 px-3"
+                  onClick={() => getFollower("unfollow", follower.id)}
+                >
+                  unfollow
+                </button>
+              ) : (
+                <button
+                  className="border-[1px] border-black py-1 px-3"
+                  onClick={() => getFollower("follow", follower.id)}
+                >
+                  follow
+                </button>
+              )}
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       ))}
     </div>

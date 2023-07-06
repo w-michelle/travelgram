@@ -101,14 +101,22 @@ function Post() {
                     src={post.profilePic}
                     alt="Profile Picture"
                     fill
-                    className="object-contain"
+                    className="object-cover rounded-full"
+                    aria-label="Profile Picture"
+                    title="Profile"
                   />
                 )}
               </div>
 
-              <div className="mx-2 text-sm">
+              <Link
+                href={{
+                  pathname: `/profile/${post.uid}`,
+                  query: { uid: post.uid },
+                }}
+                className="mx-2 text-sm"
+              >
                 {post && <p className="font-semibold">{post.displayName}</p>}
-              </div>
+              </Link>
               <p className="mr-1 text-grey">•</p>
               {post && post.timestamp && (
                 <div className="text-grey text-sm">
@@ -119,6 +127,8 @@ function Post() {
               <HiOutlineDotsVertical
                 className="ml-auto rotate-[90deg] text-xl"
                 onClick={() => handleEdit(post)}
+                aria-label="More options on post"
+                title="More options"
               />
             </div>
 
@@ -129,6 +139,8 @@ function Post() {
                   alt="Image of a post"
                   fill
                   className="object-cover"
+                  aria-label="Post Image"
+                  title="Post Image"
                 />
               </div>
 
@@ -138,16 +150,26 @@ function Post() {
                   <AiFillHeart
                     className={`top-right-icon fill-heart-icon`}
                     onClick={() => removeLike(post.id)}
+                    aria-label="Unlike"
+                    title="Unlike"
                   />
                 ) : (
                   <AiOutlineHeart
                     className={`top-right-icon heart-icon`}
                     onClick={() => addLikedUser(post.id)}
+                    aria-label="Like"
+                    title="Like"
                   />
                 )}
-                <TbMessageCircle2 className="top-right-icon bubble" />
-                <FiSend className="top-right-icon send" />
-                <BiBookmark className="ml-auto" />
+                <Link
+                  href={{ pathname: `/post/${post.id}`, query: { ...post } }}
+                >
+                  <TbMessageCircle2
+                    className="top-right-icon bubble"
+                    aria-label="Comment"
+                    title="Comment"
+                  />
+                </Link>
               </div>
             </div>
             <div className="px-2 text-sm">
@@ -155,11 +177,16 @@ function Post() {
             </div>
             <div className="p-2 flex text-sm">
               <div className="font-[500] mr-1">
-                {post && (
+                <Link
+                  href={{
+                    pathname: `/profile/${post.uid}`,
+                    query: { uid: post.uid },
+                  }}
+                >
                   <p>
                     <strong>{post.displayName}</strong> {post.caption}
                   </p>
-                )}
+                </Link>
               </div>
             </div>
             <Link href={{ pathname: `/post/${post.id}`, query: { ...post } }}>
