@@ -56,7 +56,7 @@ export default function Details({ ...params }) {
     }
 
     const docRef = doc(db, "posts", routeData.id);
-    console.log(typeof routeData.id);
+
     //use arr union to create array of object of the comment to a new field inside post
 
     await updateDoc(docRef, {
@@ -106,16 +106,13 @@ export default function Details({ ...params }) {
       const docRef = doc(db, "posts", routeData.id);
 
       const unsubscribe = onSnapshot(docRef, (snapshot) => {
-        setAllLikes(snapshot.data().likes);
+        setAllLikes(snapshot.data()?.likes);
       });
       return unsubscribe;
     } catch (error) {
       console.log(error);
     }
   };
-
-  //do we have to retrieve the like to
-  //why doesnt the state update right away? WE NEED TO use USEEFFECT SO it calls the function as like state changes
 
   useEffect(() => {
     getLikes();
@@ -159,7 +156,9 @@ export default function Details({ ...params }) {
               }}
             >
               <p className="text-xs ml-2">
-                {routeData && <strong>{routeData.displayName}</strong>}
+                {routeData && (
+                  <strong>{routeData.displayName.toLowerCase()}</strong>
+                )}
               </p>
             </Link>
             <HiOutlineDotsVertical
@@ -191,7 +190,7 @@ export default function Details({ ...params }) {
                     }}
                   >
                     <p className="text-xs">
-                      <strong>{routeData.displayName} </strong>
+                      <strong>{routeData.displayName.toLowerCase()} </strong>
                       {routeData.caption}
                     </p>
                   </Link>

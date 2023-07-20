@@ -1,5 +1,5 @@
 "use client";
-// import Nav from "@/components/Nav";
+
 import { auth, db } from "@/utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {
@@ -35,6 +35,8 @@ function Profile({ searchParams }) {
   const [activeTab, setActiveTab] = useState("images");
   const [editProfile, setEditProfile] = useState(false);
   const [userData, setUserData] = useState([]);
+
+  const displayName = ff?.[0]?.displayName?.toLowerCase() ?? "";
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -120,7 +122,7 @@ function Profile({ searchParams }) {
     const getPost = onSnapshot(postsQuery, (snapshot) => {
       let arr = snapshot.docs
         .map((doc) => ({ ...doc.data(), id: doc.id }))
-        .sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
+        .sort((a, b) => a.timestamp?.seconds - b.timestamp?.seconds);
       setPosts(arr);
     });
 
@@ -146,7 +148,6 @@ function Profile({ searchParams }) {
   };
 
   useEffect(() => {
-    // if (!user) route.push("/auth/signup");
     getUserdoc();
     loadPosts();
     loadff();
@@ -185,7 +186,7 @@ function Profile({ searchParams }) {
                 </button>
               ) : (
                 <div>
-                  {containId.includes(user.uid) ? (
+                  {containId.includes(user?.uid) ? (
                     <button
                       className="py-1 px-6 mt-1 rounded-lg bg-blue text-white text-sm font-semibold"
                       onClick={() => handleAction("unfollow")}

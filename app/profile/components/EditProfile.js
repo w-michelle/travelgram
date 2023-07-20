@@ -32,7 +32,7 @@ function EditProfile({ setEditProfile, ffData }) {
     const image = imageFile !== "" ? publicImageUrl : ffData[0].profilePic;
 
     await updateProfile(auth.currentUser, {
-      displayName: displayname.replace(/ /g, ""),
+      displayName: displayname.toLowerCase().replace(/ /g, ""),
       photoURL: image,
     })
       .then(() => console.log("profile updated"))

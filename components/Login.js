@@ -23,13 +23,15 @@ function Login({ handleShow }) {
     "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
 
   const userLogin = async () => {
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-
-      router.push("/");
-    } catch (error) {
-      alert("Incorrect credentials");
-    }
+    await signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        router.push("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorCode, errorMessage);
+      });
   };
 
   const guestSignIn = async () => {

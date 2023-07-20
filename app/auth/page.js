@@ -26,19 +26,20 @@ function Auth() {
   let DEFAULT_PROFILE_IMAGE =
     "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg";
   const userSignup = async () => {
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-
-      await updateProfile(auth.currentUser, {
-        displayName: displayName.replace(/ /g, ""),
-        photoURL: DEFAULT_PROFILE_IMAGE,
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        updateProfile(auth.currentUser, {
+          displayName: displayName.replace(/ /g, "").toLowerCase(),
+          photoURL: DEFAULT_PROFILE_IMAGE,
+        });
+        setShowLogin(true);
+        setShowSignup(false);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(errorCode, errorMessage);
       });
-
-      setShowLogin(true);
-      setShowSignup(false);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const handleSignUp = (e) => {

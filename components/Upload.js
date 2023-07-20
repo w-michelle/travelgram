@@ -40,8 +40,6 @@ function Upload({ toggle }) {
     setCaption(e.target.value);
   };
 
-  //pushing to firebase
-
   const handleUploadPost = async () => {
     setIsPreviewMode(false);
     toggle(true);

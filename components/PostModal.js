@@ -31,6 +31,7 @@ function PostModal({ post, toggle }) {
   const deletePost = async () => {
     const docRef = doc(db, "posts", post.id);
     await deleteDoc(docRef);
+    router.push("/");
   };
 
   //follow/unfollow
@@ -45,7 +46,7 @@ function PostModal({ post, toggle }) {
     });
 
     //update user onto followed user
-    // I HAVE TO GET USER'S DOC ID
+
     const docRef2 = doc(db, "users", creatorInfo[0].id);
     await updateDoc(docRef2, {
       follower: arrayUnion({
@@ -68,7 +69,7 @@ function PostModal({ post, toggle }) {
     });
 
     //update user onto followed user
-    // I HAVE TO GET USER'S DOC ID
+
     const docRef2 = doc(db, "users", creatorInfo[0].id);
     await updateDoc(docRef2, {
       follower: arrayRemove({
@@ -120,7 +121,6 @@ function PostModal({ post, toggle }) {
     getCreator();
   }, [action]);
 
-  //if this post id === user.uid this post is user's then remove
   return (
     <div
       className="post-modal-container fixed bg-bgrey w-full h-full top-0 left-0 z-50 flex justify-center items-center overflow-hidden"

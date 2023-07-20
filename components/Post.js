@@ -115,7 +115,11 @@ function Post() {
                 }}
                 className="mx-2 text-sm"
               >
-                {post && <p className="font-semibold">{post.displayName}</p>}
+                {post && (
+                  <p className="font-semibold">
+                    {post.displayName.toLowerCase()}
+                  </p>
+                )}
               </Link>
               <p className="mr-1 text-grey">•</p>
               {post && post.timestamp && (
@@ -184,7 +188,8 @@ function Post() {
                   }}
                 >
                   <p>
-                    <strong>{post.displayName}</strong> {post.caption}
+                    <strong>{post.displayName.toLowerCase()}</strong>{" "}
+                    {post.caption}
                   </p>
                 </Link>
               </div>
