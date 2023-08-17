@@ -89,7 +89,7 @@ function Post() {
 
   return (
     <div className="md:mt-12 md:w-[468px] w-full my-0 mx-auto">
-      <div className="">
+      <div className="mb-10">
         {togglePost && <PostModal post={postId} toggle={handleToggle} />}
 
         {posts?.map((post) => (
@@ -129,7 +129,7 @@ function Post() {
               )}
 
               <HiOutlineDotsVertical
-                className="ml-auto rotate-[90deg] text-xl"
+                className="ml-auto rotate-[90deg] text-xl hover:cursor-pointer"
                 onClick={() => handleEdit(post)}
                 aria-label="More options on post"
                 title="More options"
@@ -152,14 +152,14 @@ function Post() {
                 {user &&
                 post.likes?.filter((e) => e.id == user.uid).length > 0 ? (
                   <AiFillHeart
-                    className={`top-right-icon fill-heart-icon`}
+                    className={`top-right-icon fill-heart-icon hover:cursor-pointer`}
                     onClick={() => removeLike(post.id)}
                     aria-label="Unlike"
                     title="Unlike"
                   />
                 ) : (
                   <AiOutlineHeart
-                    className={`top-right-icon heart-icon`}
+                    className={`top-right-icon heart-icon hover:cursor-pointer`}
                     onClick={() => addLikedUser(post.id)}
                     aria-label="Like"
                     title="Like"

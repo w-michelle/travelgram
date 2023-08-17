@@ -125,7 +125,7 @@ function Upload({ toggle }) {
             <input
               type="file"
               id="fileInput"
-              className="fileInput mt-8"
+              className="fileInput mt-8 hover:cursor-pointer"
               onChange={handleFileSelect}
             />
           </div>

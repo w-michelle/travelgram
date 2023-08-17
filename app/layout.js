@@ -12,7 +12,7 @@ const roboto = Roboto({
 
 export const metadata = {
   title: "Travelgram",
-  description: "A simple & fun wat to share your travel photos",
+  description: "A simple & fun way to share your travel photos",
 };
 
 export default function RootLayout({ children }) {
