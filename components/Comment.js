@@ -1,17 +1,9 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { auth, db } from "../utils/firebase";
-import {
-  arrayUnion,
-  doc,
-  getDoc,
-  onSnapshot,
-  serverTimestamp,
-  Timestamp,
-  updateDoc,
-} from "firebase/firestore";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
 import { useState, useEffect } from "react";
-import { formatLogDate } from "@/utils/formatDate";
+
 import Image from "next/image";
 import Link from "next/link";
 export default function Comment({ ...params }) {
@@ -23,6 +15,7 @@ export default function Comment({ ...params }) {
     const docRef = doc(db, "posts", routeData.id);
     const docSnap = await getDoc(docRef);
     const unsubscribe = onSnapshot(docRef, (snapshot) => {
+      console.log(snapshot.data()?.comments);
       setAllComments(snapshot.data()?.comments);
     });
     return unsubscribe;
@@ -34,8 +27,8 @@ export default function Comment({ ...params }) {
 
   return (
     <div className="w-full z-20">
-      {allComments?.map((comment, index) => (
-        <div key={index} className="comment-container px-2">
+      {allComments?.map((comment) => (
+        <div key={comment.uid} className="comment-container px-2">
           <div className="comment-caption mb-4 flex items-center gap-2">
             <div className="relative w-7 h-7">
               <Image

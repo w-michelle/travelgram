@@ -2,14 +2,10 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AiFillHome, AiOutlineHome } from "react-icons/ai";
-import { MdOutlineExplore } from "react-icons/md";
+
 import { RiAddBoxLine } from "react-icons/ri";
 
-import { FiSend } from "react-icons/fi";
-import { BiSearch } from "react-icons/bi";
-import { RiVideoLine } from "react-icons/ri";
 import { BiLogOut } from "react-icons/bi";
-import { AiOutlineHeart } from "react-icons/ai";
 
 import { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";

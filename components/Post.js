@@ -1,9 +1,8 @@
 "use client";
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { FiSend } from "react-icons/fi";
+
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { TbMessageCircle2 } from "react-icons/tb";
-import { BiBookmark } from "react-icons/bi";
 
 import { useState } from "react";
 import {

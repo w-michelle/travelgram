@@ -1,6 +1,5 @@
 "use client";
-import { AiOutlineHeart } from "react-icons/ai";
-import { FiSend } from "react-icons/fi";
+
 import { Lobster } from "next/font/google";
 import Link from "next/link";
 const lobster = Lobster({
