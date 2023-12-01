@@ -4,7 +4,7 @@ Travelgram is a React Application designed to be a clone of Instagram.
 
 **[View Site](https://mytravelgram.vercel.app)**
 
-## Build With
+## Built With
 
 - Next.js
 - React
