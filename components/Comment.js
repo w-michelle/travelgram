@@ -15,7 +15,6 @@ export default function Comment({ ...params }) {
     const docRef = doc(db, "posts", routeData.id);
     const docSnap = await getDoc(docRef);
     const unsubscribe = onSnapshot(docRef, (snapshot) => {
-      console.log(snapshot.data()?.comments);
       setAllComments(snapshot.data()?.comments);
     });
     return unsubscribe;
@@ -53,7 +52,6 @@ export default function Comment({ ...params }) {
               {comment.comment}
             </p>
           </div>
-          {/* <p className="post-date">{formatLogDate(comment.time)}</p> */}
         </div>
       ))}
     </div>

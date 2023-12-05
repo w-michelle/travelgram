@@ -24,6 +24,7 @@ import AddComment from "./AddComment";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { BiLoaderCircle } from "react-icons/bi";
 function Post() {
   const [user, loading] = useAuthState(auth);
   const [posts, setPosts] = useState([]);
@@ -85,6 +86,10 @@ function Post() {
   useEffect(() => {
     loadPosts();
   }, [user, loading]);
+
+  const loadingImg = () => {
+    return <BiLoaderCircle />;
+  };
 
   return (
     <div className="md:mt-12 md:w-[468px] w-full my-0 mx-auto">

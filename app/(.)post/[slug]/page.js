@@ -122,7 +122,7 @@ export default function Details({ ...params }) {
     <div className="details-container bg-glass backdrop-blur-[10px] h-screen flex justify-center items-center p-10">
       {togglePost && <PostModal post={postId} toggle={handleToggle} />}
       <button
-        className="absolute top-8 right-8 right-[200px] text-xl hover:text-white"
+        className="absolute top-8 right-8 text-xl hover:text-white"
         onClick={() => router.back()}
       >
         &times;

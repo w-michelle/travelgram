@@ -96,12 +96,6 @@ function Upload({ toggle }) {
 
   return (
     <div className="w-full fixed top-0 flex h-[100vh] justify-center items-center bg-modalbg">
-      {/* <div
-        className="absolute right-[150px] top-10 text-xl hover:cursor-pointer hover:text-white"
-        onClick={() => toggle(true)}
-      >
-        &times;
-      </div> */}
       {!isPreviewMode && (
         <div className="bg-white w-3/4 py-4 h-1/2 flex flex-col items-center rounded-xl">
           <div className="flex items-center justify-between w-full pb-4 border-b-2 border-bgrey ">
@@ -119,13 +113,13 @@ function Upload({ toggle }) {
               onDrop={dropped}
               onDragOver={handleDragOver}
             >
-              <BsCardImage className="text-[70px]" />
-              <p className="mt-4">Drag photos here</p>
+              <BsCardImage className="text-[70px] hidden md:block" />
+              <p className="mt-4 hidden md:block">Drag photos here</p>
             </div>
             <input
               type="file"
               id="fileInput"
-              className="fileInput mt-8 hover:cursor-pointer"
+              className="fileInput pl-6 mt-8 hover:cursor-pointer"
               onChange={handleFileSelect}
             />
           </div>
