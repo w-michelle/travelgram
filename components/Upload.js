@@ -113,8 +113,8 @@ function Upload({ toggle }) {
               onDrop={dropped}
               onDragOver={handleDragOver}
             >
-              <BsCardImage className="text-[70px] hidden md:block" />
-              <p className="mt-4 hidden md:block">Drag photos here</p>
+              <BsCardImage className="text-[70px]" />
+              <p className="mt-4">Drag photos here</p>
             </div>
             <input
               type="file"
